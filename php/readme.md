@@ -10,18 +10,17 @@ Usage with linux crontab
 
 ```
 # DEFINE TIMESTAMP
-
 CURR_TIME = date +%Y-%m-%d,%H:%M:%S
 
 # DEFINE LOG FILE DIR
-
 LOG_DIR = /pathto/cron_logs/
+# ---- ----
 
 # 1/Hour single Cronjob
 01 * * * * { $CURR*TIME; php /path/projectname/cronjob.php; } > ${LOG_DIR}/cronjob_log.txt 2>&1
 
 # 1/Hour multiple Cronjob
-01 * * * * { $CURR*TIME; php /path/projectname/cronjob_1.php; } > ${LOG_DIR}/cronjob_log_1.txt 2>&1
+01 * * * * { $CURR_TIME; php /path/projectname/cronjob_1.php; } > ${LOG_DIR}/cronjob_log_1.txt 2>&1
 01 * * * * { $CURR_TIME; php /path/projectname/cronjob_2.php; } > ${LOG_DIR}/cronjob_log_2.txt 2>&1
 
 # 1/Daily single Cronjob
