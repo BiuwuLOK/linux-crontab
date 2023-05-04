@@ -11,8 +11,8 @@ class LogFileReader {
   private $dir; // Declare a property to store the current directory
   private $today;  // Declare a property to store today's date
   private $log_contents;  // Declare a property to store the log contents
-	private $timestamp; // Declare a property to store system datetime
-	// Declare a constructor that takes the directory as an argument
+  private $timestamp; // Declare a property to store system datetime
+  // Declare a constructor that takes the directory as an argument
   public function __construct($dir) {
     // Assign the directory to the property
     $this->dir = $dir;
@@ -23,7 +23,7 @@ class LogFileReader {
     $this->log_contents = " <h2>$this->timestamp daily cron job running.</h2><br>\n";
   }
 
-	// Declare a method that reads and processes the files
+  // Declare a method that reads and processes the files
   public function readFiles() {
     // List all the .txt files in the directory
     $files = glob($this->dir . "/*.txt");
@@ -38,7 +38,7 @@ class LogFileReader {
       foreach ($last_eight_lines as $line) {
         // If the line contains today's date and time or later, set the flag to true
         if (strpos($line, $this->today) !== false || strtotime($line) > strtotime($this->today)) {
-        	$flag = true;
+          $flag = true;
         } // set flag for lines
         // If the flag is true, print the line
         if ($flag) {    $this->log_contents .= $line;    }
@@ -63,22 +63,22 @@ $log_contents = $log_files->getLogContents();
 $errorPattern = '/warning|error|notice/'; // create a pattern like /warning|error|notice/
 if (preg_match($errorPattern, $log_contents, $matches)) {
   $todo = "Found {$matches[0]} in.\n";
-	echo $todo;
+  echo $todo;
 }
 
 if (!empty($log_contents)){ // after log_contents completed
 
   echo TIMESTAMP . "log_contents completed.<br/>\n"; // confirm log content completed.
-	
-	$email_content_head = "
-	<h1>My Host (Input some IPs or desc) daily crontab re-check</h1>
-	<p>--- --- --- ---</p>
-	"; // adding content head
-	$emailContent = $email_content_head . $log_contents;
+  
+  $email_content_head = "
+  <h1>My Host (Input some IPs or desc) daily crontab re-check</h1>
+  <p>--- --- --- ---</p>
+  "; // adding content head
+  $emailContent = $email_content_head . $log_contents;
 
 echo $emailContent;
 
-	try { // setup phpmailer send daily @recheck_content let Devs knowing crontab status.
+  try { // setup phpmailer send daily @recheck_content let Devs knowing crontab status.
 
     require __DIR__ . "/../phpmailer/PHPMailerAutoload.php";
     $mail = new PHPMailer(true);
@@ -106,8 +106,8 @@ echo $emailContent;
     $mail->isHTML(true);                                  // Set email format to HTML
 
     if (!empty($todo)) { // check if any error pop up in log content
-    	// raise up flasg to alert
-    	$mail->addCustomHeader("X-Message-Flag: Follow up");
+      // raise up flasg to alert
+      $mail->addCustomHeader("X-Message-Flag: Follow up");
     }
 
     $mail->Subject = 'Domain Host 100.20 daily crontab re-check';
@@ -118,15 +118,15 @@ echo $emailContent;
     //return false;
 
     if ($mail->send()) {
-    	echo '<u style="color: red;">Email has been send.</u>' . "\n";
+      echo '<u style="color: red;">Email has been send.</u>' . "\n";
     }
-	} catch (phpmailerException $e) {
+  } catch (phpmailerException $e) {
     echo $e->errorMessage(); //Pretty error messages from PHPMailer
-	} catch (Exception $e) {
+  } catch (Exception $e) {
     echo $e->getMessage(); //Boring error messages from anything else!
-	}
+  }
 } else {
-	echo 'something wrong when reading logs files.';
+  echo 'something wrong when reading logs files.';
 }
 
 ?>
