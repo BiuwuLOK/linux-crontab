@@ -19,7 +19,7 @@ class LogFileReader {
     // Get today's date and time in Y-m-d H:i:s format
     $this->today = date("Y-m-d");
     // Prepare params, timestamp with initiates.
-		$this->timestamp = TIMESTAMP;
+    $this->timestamp = TIMESTAMP;
     $this->log_contents = " <h2>$this->timestamp daily cron job running.</h2><br>\n";
   }
 
@@ -38,8 +38,8 @@ class LogFileReader {
       foreach ($last_eight_lines as $line) {
         // If the line contains today's date and time or later, set the flag to true
         if (strpos($line, $this->today) !== false || strtotime($line) > strtotime($this->today)) {
-					$flag = true;
-				} // set flag for lines
+        	$flag = true;
+        } // set flag for lines
         // If the flag is true, print the line
         if ($flag) {    $this->log_contents .= $line;    }
       }
@@ -80,50 +80,50 @@ echo $emailContent;
 
 	try { // setup phpmailer send daily @recheck_content let Devs knowing crontab status.
 
-		require __DIR__ . "/../phpmailer/PHPMailerAutoload.php";
-		$mail = new PHPMailer(true);
-		// $mail->SMTPDebug = 3;                               // Enable verbose debug output
+    require __DIR__ . "/../phpmailer/PHPMailerAutoload.php";
+    $mail = new PHPMailer(true);
+    // $mail->SMTPDebug = 3;                               // Enable verbose debug output
 
-		$mail->isSMTP();                                      // Set mailer to use SMTP
-		$mail->Host = 'My Host IP';  // Specify main and backup SMTP servers
-		$mail->SMTPAuth = false;                               // Enable SMTP authentication
-		// $mail->Username = 'user@example.com';                 // SMTP username
-		// $mail->Password = 'secret';                           // SMTP password
-		// $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-		$mail->Port = 25;                                    // TCP port to connect to
+    $mail->isSMTP();                                      // Set mailer to use SMTP
+    $mail->Host = 'My Host IP';  // Specify main and backup SMTP servers
+    $mail->SMTPAuth = false;                               // Enable SMTP authentication
+    // $mail->Username = 'user@example.com';                 // SMTP username
+    // $mail->Password = 'secret';                           // SMTP password
+    // $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = 25;                                    // TCP port to connect to
 
-		$mail->setFrom('user@example.com', 'Domain Host Support - Cronjob task');
-		$mail->addAddress('user@example.com', 'user');     // Add a recipient
-		// $mail->addAddress('maximilian.lok@Domain.mo', 'user');     // Add a recipient
-		// $mail->addAddress('ellen@example.com');               // Name is optional
-		
-		$mail->addReplyTo('user@example.com', 'Domain Host Support - Cronjob task');
-		// $mail->addBCC('bcc@example.com');
-		// $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-		// $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-		$mail->CharSet = "UTF-8";                                // set email encode to UTF-8
-		// $mail->Encoding = 'base64';                              // if UTF-8 not working
-		$mail->isHTML(true);                                  // Set email format to HTML
+    $mail->setFrom('user@example.com', 'Domain Host Support - Cronjob task');
+    $mail->addAddress('user@example.com', 'user');     // Add a recipient
+    // $mail->addAddress('maximilian.lok@Domain.mo', 'user');     // Add a recipient
+    // $mail->addAddress('ellen@example.com');               // Name is optional
+    
+    $mail->addReplyTo('user@example.com', 'Domain Host Support - Cronjob task');
+    // $mail->addBCC('bcc@example.com');
+    // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+    // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+    $mail->CharSet = "UTF-8";                                // set email encode to UTF-8
+    // $mail->Encoding = 'base64';                              // if UTF-8 not working
+    $mail->isHTML(true);                                  // Set email format to HTML
 
-		if (!empty($todo)) { // check if any error pop up in log content
-			// raise up flasg to alert
-			$mail->addCustomHeader("X-Message-Flag: Follow up");
-		}
+    if (!empty($todo)) { // check if any error pop up in log content
+    	// raise up flasg to alert
+    	$mail->addCustomHeader("X-Message-Flag: Follow up");
+    }
 
-		$mail->Subject = 'Domain Host 100.20 daily crontab re-check';
-		$mail->Body    = $emailContent;
+    $mail->Subject = 'Domain Host 100.20 daily crontab re-check';
+    $mail->Body    = $emailContent;
 
-		$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-		// $mail->send();
-		//return false;
+    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+    // $mail->send();
+    //return false;
 
-		if ($mail->send()) {
-			echo '<u style="color: red;">Email has been send.</u>' . "\n";
-		}
+    if ($mail->send()) {
+    	echo '<u style="color: red;">Email has been send.</u>' . "\n";
+    }
 	} catch (phpmailerException $e) {
-		echo $e->errorMessage(); //Pretty error messages from PHPMailer
+    echo $e->errorMessage(); //Pretty error messages from PHPMailer
 	} catch (Exception $e) {
-		echo $e->getMessage(); //Boring error messages from anything else!
+    echo $e->getMessage(); //Boring error messages from anything else!
 	}
 } else {
 	echo 'something wrong when reading logs files.';
