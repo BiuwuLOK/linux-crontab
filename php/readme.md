@@ -1,11 +1,14 @@
 This is for `PHP` part descriptions.
 
+```
 // \* \* \* \* \* stands for: Minutes, Hours, Days, Months, WeekDays.
+```
 
-![alt text](https://github.com/senkoraku552/linux-crontab-staffs/images/cronjob_syntax.webp?raw=true)
+![alt text](https://github.com/senkoraku552/linux-crontab-staffs/images/cronjob_syntax.webp)
 
 Usage with linux crontab
 
+```
 // DEFINE TIMESTAMP
 
 CURR_TIME = date +%Y-%m-%d,%H:%M:%S
@@ -29,3 +32,4 @@ LOG_DIR = /pathto/cron_logs/
 ## 1/Daily send email after all log ready
 
 10 04 \* \* \* { $CURR_TIME; php /path/LogFileReader.php; } > ${LOG_DIR}/final_cronjob_log.txt
+```
